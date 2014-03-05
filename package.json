@@ -1,0 +1,30 @@
+{
+  "name": "tpplusplus",
+  "version": "0.0.1",
+  "description": "A button for adding a link to Tech.pro",
+  "main": "gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/techdotpro/tpplusplus.git"
+  },
+  "keywords": [
+    "Tech.pro",
+    "button",
+    "social",
+    "share"
+  ],
+  "author": "SIOPCO",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/techdotpro/tpplusplus/issues"
+  },
+  "homepage": "https://github.com/techdotpro/tpplusplus",
+  "dependencies": {
+    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-qunit": "^0.4.0",
+    "grunt-contrib-jshint": "^0.8.0",
+    "grunt-contrib-watch": "^0.5.3",
+    "grunt": "^0.4.2"
+  }
+}
