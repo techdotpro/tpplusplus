@@ -16,7 +16,19 @@ module.exports = function (grunt) {
                 stripBanners: true
             },
             dist: {
-                src: ['lib/<%= pkg.name %>.js'],
+                src: [
+                    'lib/intro.js',
+                    'lib/shims.js',
+                    'lib/tp.js',
+                    'lib/utils.js',
+                    'lib/events.js',
+                    'lib/dom.js',
+                    'lib/frames.js',
+                    'lib/widgets.js',
+                    'lib/ui.js',
+                    'lib/run.js',
+                    'lib/outro.js'
+                ],
                 dest: 'dist/<%= pkg.name %>.js'
             }
         },
@@ -31,31 +43,13 @@ module.exports = function (grunt) {
         },
         jshint: {
             options: {
-                node: true,
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: true,
-                unused: true,
-                boss: true,
-                eqnull: true,
-                browser: true,
-                globals: {
-                    "ok": true,
-                    "module": true,
-                    "test": true,
-                    "equal": true
-                }
+                jshintrc: true
             },
             gruntfile: {
                 src: 'gruntfile.js'
             },
-            lib_test: {
-                src: ['lib/**/*.js', 'test/**/*.js']
+            all: {
+                src: ['lib/**/*.js', '!lib/intro.js', '!lib/outro.js']
             }
         },
         qunit: {
@@ -66,15 +60,20 @@ module.exports = function (grunt) {
                 files: '<%= jshint.gruntfile.src %>',
                 tasks: ['jshint:gruntfile']
             },
-            lib_test: {
-                files: '<%= jshint.lib_test.src %>',
-                tasks: ['jshint:lib_test', 'qunit']
-            },
             all: {
-                files: 'lib/<%= pkg.name %>.js',
+                files: 'lib/**/*.js',
                 tasks: ['concat', 'uglify']
             }
+        },
+        docco: {
+            debug: {
+                src: ['dist/tpplusplus.js'],
+                options: {
+                    output: 'docs/'
+                }
+            }
         }
+
     });
 
     // These plugins provide necessary tasks
@@ -83,6 +82,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-docco');
 
     // Default task
     grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
