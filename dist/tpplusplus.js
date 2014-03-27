@@ -4,6 +4,7 @@
 ;(function() {
 "use strict";
 // var slice = Array.prototype.slice;
+
 var TP = {};
 
 TP.Core = {};
@@ -49,6 +50,15 @@ TP.$ = function() {
     return document.querySelectorAll.apply(document, arguments);
 };
 
+TP.$.on = function(el, name, fn) {
+    if (el.addEventListener) {
+        el.addEventListener(name, fn, false);
+    }
+    else if (el.attachEvent)  {
+        el.attachEvent(name, fn);
+    }
+};
+
 // Insert a `widget` into the dom by replacing `el` with a new element.
 TP.DOM.insertWidget = function(widget, el) {
     var element = document.createElement(widget.tagName),
@@ -71,7 +81,7 @@ TP.DOM.insertWidget = function(widget, el) {
 TP.DOM.updateWidget = function(widget, content) {
     widget.element.innerHTML = content;
 };
-window.addEventListener("message", function(e) {
+TP.$.on(window, "message", function(e) {
     if (e.origin === "http://oil.com" || e.origin === "http://oilpro.com") {
         var el = document.createElement("pre");
         el.style.display = "block";
