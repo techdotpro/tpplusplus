@@ -72,7 +72,7 @@ TP.DOM.updateWidget = function(widget, content) {
     widget.element.innerHTML = content;
 };
 window.addEventListener("message", function(e) {
-    if (e.origin === "http://oil.com") {
+    if (e.origin === "http://oil.com" || e.origin === "http://oilpro.com") {
         var el = document.createElement("pre");
         el.style.display = "block";
         el.innerHTML = JSON.stringify(JSON.parse(e.data), null, 4);
