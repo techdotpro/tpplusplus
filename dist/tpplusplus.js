@@ -3,7 +3,6 @@
 * Copyright (c) 2014 ;*/
 ;(function() {
 "use strict";
-// var slice = Array.prototype.slice;
 if (typeof Object.create !== "function") {
     (function () {
         var F = function () {};
@@ -12,6 +11,27 @@ if (typeof Object.create !== "function") {
             return new F();
         };
     })();
+}
+
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function (oThis) {
+    if (typeof this !== "function") {
+      // closest thing possible to the ECMAScript 5 internal IsCallable function
+      throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+    }
+
+    var aArgs = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        FNOP = function () {},
+        FBound = function () {
+          return fToBind.apply(this instanceof FNOP && oThis ? this : oThis, aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    FNOP.prototype = this.prototype;
+    FBound.prototype = new FNOP();
+
+    return FBound;
+  };
 }
 var TP = {};
 
@@ -70,13 +90,13 @@ TP.$.on = function(el, name, fn) {
 // Insert a `widget` into the dom by replacing `el` with a new element.
 TP.DOM.insertWidget = function(widget, el) {
     var element = document.createElement(widget.tagName),
-        event;
+        eventName;
 
     element.className = widget.className;
     
-    for(event in widget.events) {
-        element.addEventListener(event, function(e) {
-            widget.events[event].call(widget, e);
+    for(eventName in widget.events) {
+        TP.$.on(element, eventName, function(e) {
+            widget.events[eventName].call(widget, e);
         });
     }
 
@@ -89,22 +109,27 @@ TP.DOM.insertWidget = function(widget, el) {
 TP.DOM.updateWidget = function(widget, content) {
     widget.element.innerHTML = content;
 };
-TP.$.on(window, "message", function(e) {
+var messageRecieved = function(e) {
     if (e.origin === "http://oil.com" || e.origin === "http://oilpro.com") {
         var el = document.createElement("pre");
         el.style.display = "block";
         el.innerHTML = JSON.stringify(JSON.parse(e.data), null, 4);
         document.documentElement.appendChild(el);
     }
-});
+};
 
-var iframe = document.createElement("iframe");
-iframe.width = 0;
-iframe.height = 0;
-iframe.style.display = "none";
-iframe.src = "http://oilpro.com/widget/button";
+TP.$.on(window, window.addEventListener ? "message": "onmessage", messageRecieved);
 
-document.documentElement.appendChild(iframe);
+window.onload = function() {
+    var iframe = document.createElement("iframe");
+    iframe.width = 0;
+    iframe.height = 0;
+    iframe.style.display = "none";
+    iframe.src = "http://oilpro.com/widget/button";
+
+    document.documentElement.appendChild(iframe);
+};
+
 var _widgets = {},
     _instances = {},
     count = 0;
@@ -132,9 +157,15 @@ TP.UI.Widgets.register = function(name, widget) {
 // For example, the `PlusPlus` widget will scan the page for elements
 // with a tag name of `<tp-plusplus>`.
 TP.UI.Widgets.scan = function() {
-    var name, elements;
+    var name, tpElements, elements = [];
     for (name in _widgets) {
-        elements = TP.$("tp-" + name.toLowerCase());
+        tpElements = document.getElementsByTagName("tp-" + name.toLowerCase());
+
+        if (tpElements.length) {
+            for(var i = 0, len = tpElements.length; i < len; i++) {
+                elements.push(tpElements[i]);
+            }
+        }
 
         if (elements.length) {
             TP.UI.Widgets.loadWidgets(name, elements);

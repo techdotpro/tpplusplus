@@ -27,6 +27,7 @@
         "jQuery": true,
         "alert": true,
         "TP": true,
-        "template": true
+        "template": true,
+        "slice": true
     }
 }
