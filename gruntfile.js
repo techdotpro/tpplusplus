@@ -49,7 +49,7 @@ module.exports = function (grunt) {
                 src: 'gruntfile.js'
             },
             all: {
-                src: ['lib/**/*.js', '!lib/intro.js', '!lib/outro.js']
+                src: ['lib/**/*.js', '!lib/intro.js', '!lib/outro.js', '!lib/utils.js']
             }
         },
         qunit: {

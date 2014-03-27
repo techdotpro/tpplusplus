@@ -1,4 +1,4 @@
-/*! tpplusplus - v0.0.1 - 2014-03-10
+/*! tpplusplus - v0.0.1 - 2014-03-27
 * https://github.com/techdotpro/tpplusplus
 * Copyright (c) 2014 ;*/
 ;(function() {
@@ -84,7 +84,7 @@ var iframe = document.createElement("iframe");
 iframe.width = 0;
 iframe.height = 0;
 iframe.style.display = "none";
-iframe.src = "http://oil.com/widget/button";
+iframe.src = "http://oilpro.com/widget/button";
 
 document.documentElement.appendChild(iframe);
 var _widgets = {},
@@ -146,7 +146,7 @@ TP.UI.Widgets.loadWidget = function(widget, el) {
 
 // ### TP.UI.Widgets.PlusPlus
 // A widget for rendering a TP++ button
-TP.UI.Widgets.register("PlusPlus", function(element) {
+TP.UI.Widgets.register("PlusPlus", function(/*element?*/) {
     this.tagName = "a";
 
     // The data for rendering in the template

@@ -26,6 +26,7 @@
         "equal": true,
         "jQuery": true,
         "alert": true,
-        "TP": true
+        "TP": true,
+        "template": true
     }
 }
