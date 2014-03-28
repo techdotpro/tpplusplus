@@ -1,4 +1,4 @@
-/*! tpplusplus - v0.0.1 - 2014-03-27
+/*! tpplusplus - v0.0.1 - 2014-03-28
 * https://github.com/techdotpro/tpplusplus
 * Copyright (c) 2014 ;*/
 ;(function() {
@@ -40,6 +40,7 @@ TP.UI = {};
 TP.UI.Widgets = {};
 TP.Utils = {};
 TP.DOM = {};
+
 // A small template function. Use it like...
 //
 //    template("something {{foo}}", {
@@ -125,7 +126,7 @@ window.onload = function() {
     iframe.width = 0;
     iframe.height = 0;
     iframe.style.display = "none";
-    iframe.src = "http://oilpro.com/widget/button";
+    iframe.src = "http://oil.com/widget/button";
 
     document.documentElement.appendChild(iframe);
 };
