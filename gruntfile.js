@@ -24,6 +24,7 @@ module.exports = function (grunt) {
                     'lib/events.js',
                     'lib/dom.js',
                     'lib/frames.js',
+					'lib/user.js',
                     'lib/widgets.js',
                     'lib/ui.js',
                     'lib/run.js',
